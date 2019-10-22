@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Timesheet</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <Style>
+        h3 {
+            margin-left: 45%
+        }
+
+        img {
+            border-radius: 50%;
+        }
+    </Style>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
+        <a class="navbar-brand" href="#">
+            <img src="C:/Users/surya narayanan/Downloads/logo.png" alt="logo" style="width:55px;">
+        </a>
+
+
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="C:/Users/surya narayanan/Downloads/sedinweb (2).html"><b>Home</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="C:/Users/surya narayanan/Downloads/timesheet.html"><b>Timesheet</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#"><b>Attendance</b></a>
+            </li>
+
+        </ul>
+    </nav>
+
+
+
+    <h3>Timesheet Entry</h3>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <div class='input-group date'>
+                    <input type='date' class="form-control" id="date" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="time">Time</label>
+                <div class="input-group time">
+                    <input type="time" class="form-control" id="time" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Project</label>
+                <select class="form-control" id="project">
+                    <option>Learning</option>
+                    <option>Other Activities</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea class="form-control" id="comments" rows="3"></textarea>
+            </div>
+        </form>
+
+        
+
+        <button class="btn btn-primary" type="submit" onclick="fun()">Submit form</button>
+        <button type="button" class="btn btn-primary" onclick="add_fun()">Add new </button>
+
+        <div id="con"></div>
+
+    </div>
+
+    <script>
+        function fun() {
+            var rows = {
+                date: this.document.getElementById("date").value,
+                project: this.document.getElementById("project").value,
+                comments: this.document.getElementById("comments").value,
+                time: this.document.getElementById("time").value
+            }
+
+            console.log(rows);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert("Success");
+                }
+            }
+            xhttp.open("POST", "http://localhost:3000/create", true);
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify(rows));
+
+
+        }
+
+
+
+        function add_fun(){
+    var add=document.getElementById('con');
+    add.innerHTML+="<form id='f1'> <label id='Date'>Date</label> <input type='date' id='date' class='form-control'/> <label '>Project</label><select class='form-control' id='project'><option>Learning</option><option>Other Activities</option></select><div class='form-group'><label >Comments</label><textarea class='form-control' id='comments' rows='3'></textarea></div><label >Time </label> <input type='time' id='time' class='form-control'/><button type='button' class='btn btn-primary' onclick='fun()'>Submit</button><button type='button' class='btn btn-primary ml-4' onclick='add_fun()'>add new</button><button type='button' class='btn btn-primary ml-4' onclick='delete_fun()'>delete</button></form>" 
+    console.log(add)
+}
+function delete_fun(){
+    var del=document.getElementById('f1');
+    del.remove()
+}
+
+
+
+    </script>
+
+
+</body>
+
+</html>

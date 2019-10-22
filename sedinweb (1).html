@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Sedin</title>
+    <style>
+        img {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="#">
+            <img src="D:/guvi/Angular/Sedintech/logo.png" alt="logo" style="width:55px;">
+        </a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><b>Home</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#"><b>Timesheet</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#"><b>Attendance</b></a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <nav class="navbar navbar-light bg-light">
+        <select name="interval" style="margin-left:20%">
+            <option value="this month">This month</option>
+            <option value="this day">This day</option>
+            <option value="last month">Last month</option>
+            <option value="this year">This year</option>
+        </select>
+
+        <select name="tasks" style="margin-right: 50%">
+            <option value="all projects">All projects</option>
+            <option value="project 1">Project 1</option>
+            <option value="project 2">Project 2</option>
+            <option value="project 3">Project 3</option>
+        </select>
+
+
+        <button type="button" class="btn btn-primary btn-sm">Show </button>
+        <a href="D:/guvi/Angular/Sedintech/timesheet.html" <button type="button" class="btn btn-primary btn-sm">Add new
+            </button></a>
+
+
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+    </nav>
+
+
+
+    <div>
+        <table id="project" style="border: 1px solid blue" cellpadding="20px"class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Date</th>
+                <th>Project</th>
+                <th>hours</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+        </table>
+
+    </div>
+
+
+    <script>
+     
+
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = this.responseText;
+                var data = JSON.parse(data);
+                data.map(parsedata => {
+                    document.getElementById("project").innerHTML +=
+                        `<tr><td>` +
+                        parsedata.username +
+                        `</td><td>` +
+                                parsedata["Date"].slice(0, 10) +
+                        `</td><td>`+
+
+                        parsedata.project +
+                        `</td><td>` +
+                        parsedata.hours +
+                        `</td><td>`+
+                    parsedata.comments +
+                        `</td></tr>`;
+                });
+            }
+        };
+        xhttp.open("GET", "http://5d4514ead823c30014771b57.mockapi.io/timesheet", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send();
+
+
+
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("project");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+
+    </script>
+
+
+
+</body>
+
+</html>
